@@ -1,0 +1,3 @@
+package: github.com/hub1989/paystack-api-wrapper
+import:
+- package: github.com/mitchellh/mapstructure

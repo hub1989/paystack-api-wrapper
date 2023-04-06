@@ -1,0 +1,39 @@
+name: CI Pipeline
+on:
+  push:
+    branches:
+      - 'main'
+
+env:
+  TOKEN: ${{ secrets.GH_PAT }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        name: Checkout code
+
+      - uses: actions/setup-go@v3
+        name: Setup go
+        with:
+          go-version: '1.19'
+          cache: true
+      - run: go version
+
+      - name: run tests
+        run: |
+          go test ./... -cover -coverprofile=coverage.out -v
+
+  bump-version:
+    name: Bump Version
+    runs-on: ubuntu-latest
+    needs:
+      - test
+    steps:
+      - uses: actions/checkout@v3
+      - name: Bump version && push tag
+        uses: hennejg/github-tag-action@v4.3.1
+        with:
+          github_token: ${{ secrets.GH_PAT }}
+          release_branches: 'main'
