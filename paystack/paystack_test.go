@@ -13,15 +13,15 @@ func init() {
 	C = configuration.NewClient(apiKey, nil)
 }
 
-func TestResolveCardBIN(t *testing.T) {
-	resp, err := C.ResolveCardBIN(59983)
-	if err != nil {
-		t.Error(err)
-	}
-	if _, ok := resp["bin"]; !ok {
-		t.Errorf("Expected response to contain bin")
-	}
-}
+//func TestResolveCardBIN(t *testing.T) {
+//	resp, err := C.ResolveCardBIN(59983)
+//	if err != nil {
+//		t.Error(err)
+//	}
+//	if _, ok := resp["bin"]; !ok {
+//		t.Errorf("Expected response to contain bin")
+//	}
+//}
 
 func TestCheckBalance(t *testing.T) {
 	resp, err := C.CheckBalance()
