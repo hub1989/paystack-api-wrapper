@@ -1,4 +1,5 @@
 name: CI Pipeline
+run-name: ${{ github.actor }} is running tests 🚀
 on:
   push:
     branches:
@@ -22,6 +23,8 @@ jobs:
       - run: go version
 
       - name: run tests
+        env:
+          PAYSTACK_KEY: {{ secrets.PAYSTACK_KEY }}
         run: |
           go test ./... -cover -coverprofile=coverage.out -v
 
