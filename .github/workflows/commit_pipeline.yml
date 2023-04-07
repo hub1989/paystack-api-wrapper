@@ -1,0 +1,31 @@
+name: Commit Pipeline
+run-name: ${{ github.actor }} is running tests 🚀
+on:
+  push:
+    branches-ignore:
+      - 'main'
+    tags-ignore:
+      - 'v**'
+
+env:
+  TOKEN: ${{ secrets.GH_PAT }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        name: Checkout code
+
+      - uses: actions/setup-go@v3
+        name: Setup go
+        with:
+          go-version: '1.19'
+          cache: true
+      - run: go version
+
+      - name: run tests
+        env:
+          PAYSTACK_KEY: ${{ secrets.PAYSTACK_KEY }}
+        run: |
+          go test ./... -cover -coverprofile=coverage.out -v

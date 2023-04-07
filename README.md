@@ -81,3 +81,5 @@ $ make docker && docker run -e PAYSTACK_KEY -i -t paystack:latest
 ## CONTRIBUTING
 Contributions are of course always welcome. The calling pattern is pretty well established, so adding new methods is relatively straightforward. Please make sure the build succeeds and the test suite passes.
 
+### test data
+https://paystack.com/docs/payments/test-payments

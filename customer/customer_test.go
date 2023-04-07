@@ -54,6 +54,7 @@ func TestCustomerCRUD(t *testing.T) {
 	if err != nil || !(len(customers.Values) > 0) || !(customers.Meta.Total > 0) {
 		t.Errorf("Expected Customer list, got %d, returned error %v", len(customers.Values), err)
 	}
+
 }
 
 func TestCustomerRiskAction(t *testing.T) {
@@ -73,5 +74,16 @@ func TestCustomerRiskAction(t *testing.T) {
 
 	if customer.Email != customer1.Email {
 		t.Errorf("Expected Customer email %v, got %v", cust.Email, customer.Email)
+	}
+}
+
+func TestListCustomer(t *testing.T) {
+	customers, err := service.List()
+	if err != nil {
+		t.Errorf(err.Error())
+	}
+
+	if len(customers.Values) == 0 {
+		t.Errorf("Expected more than 0 zero customers, got %v", len(customers.Values))
 	}
 }
