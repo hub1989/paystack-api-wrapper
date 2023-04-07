@@ -32,4 +32,5 @@ type ChargeRequest struct {
 	AuthorizationCode string           `json:"authorization_code,omitempty"`
 	Pin               string           `json:"pin,omitempty"`
 	Metadata          *client.Metadata `json:"metadata,omitempty"`
+	Reference         string           `json:"reference,omitempty"`
 }

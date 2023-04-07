@@ -99,10 +99,7 @@ func (s *DefaultCustomerService) DeactivateAuthorization(authorizationCode strin
 
 func (s *DefaultCustomerService) ValidateCustomer(customerId string, request *ValidateCustomerRequest) (bool, error) {
 	endpoint := fmt.Sprintf("/customer/%s/identification", customerId)
-	resp := struct {
-		Status  string `json:"status,omitempty"`
-		Message string `json:"message,omitempty"`
-	}{}
+	resp := &response.Response{}
 
 	err := s.Client.Call("POST", endpoint, request, &resp)
 	if err != nil {
