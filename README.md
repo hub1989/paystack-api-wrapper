@@ -1,6 +1,15 @@
 # Go library for the Paystack API.
+[![hub1989 - paystack-api-wrapper](https://img.shields.io/static/v1?label=hub1989&message=paystack-api-wrapper&color=blue&logo=github)](https://github.com/hub1989/paystack-api-wrapper "Go to GitHub repo")
+[![stars - paystack-api-wrapper](https://img.shields.io/github/stars/hub1989/paystack-api-wrapper?style=social)](https://github.com/hub1989/paystack-api-wrapper)
+[![forks - paystack-api-wrapper](https://img.shields.io/github/forks/hub1989/paystack-api-wrapper?style=social)](https://github.com/hub1989/paystack-api-wrapper)
+
+[![CI Pipeline](https://github.com/hub1989/paystack-api-wrapper/workflows/CI%20Pipeline/badge.svg)](https://github.com/hub1989/paystack-api-wrapper/actions?query=workflow:"CI+Pipeline")
+[![GitHub tag](https://img.shields.io/github/tag/hub1989/paystack-api-wrapper?include_prereleases=&sort=semver&color=blue)](https://github.com/hub1989/paystack-api-wrapper/releases/)
+[![License](https://img.shields.io/badge/License-MIT-blue)](#license)
+[![issues - paystack-api-wrapper](https://img.shields.io/github/issues/hub1989/paystack-api-wrapper)](https://github.com/hub1989/paystack-api-wrapper/issues)
+
 ###### this library is based off the original 00"github.com/rpip/paystack-go"
-paystack-api-wrapper is a 00Go client library for accessing the Paystack0 API.
+paystack-api-wrapper is a Go client library for accessing the Paystack API.
 
 Where possible, the services available on the client groups the API into logical chunks and correspond to the structure of the Paystack API documentation at https://developers.paystack.co/v1.0/reference.
 
@@ -83,3 +92,7 @@ Contributions are of course always welcome. The calling pattern is pretty well e
 
 ### test data
 https://paystack.com/docs/payments/test-payments
+
+## License
+
+Released under [MIT](/LICENSE) by [@hub1989](https://github.com/hub1989).

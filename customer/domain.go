@@ -25,6 +25,16 @@ type Customer struct {
 	RiskAction     string                      `json:"risk_action"`
 }
 
+type ValidateCustomerRequest struct {
+	Country       string `json:"country,omitempty"`
+	Type          string `json:"type,omitempty"`
+	AccountNumber string `json:"account_number,omitempty"`
+	Bvn           string `json:"bvn,omitempty"`
+	BankCode      string `json:"bank_code,omitempty"`
+	FirstName     string `json:"first_name,omitempty"`
+	LastName      string `json:"last_name,omitempty"`
+}
+
 // List is a list object for customers.
 type List struct {
 	Meta   response.ListMeta

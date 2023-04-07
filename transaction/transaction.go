@@ -10,6 +10,7 @@ type Service interface {
 	Initialize(txn *Request) (response.Response, error)
 	Verify(reference string) (*Transaction, error)
 	List() (*List, error)
+	ListForCustomer(customerId string) (*List, error)
 	ListN(count, offset int) (*List, error)
 	Get(id int) (*Transaction, error)
 	ChargeAuthorization(req *Request) (*Transaction, error)
@@ -119,4 +120,11 @@ func (s *DefaultTransactionService) CheckAuthorization(req AuthorizationRequest)
 	resp := response.Response{}
 	err := s.Client.Call("POST", u, nil, &resp)
 	return resp, err
+}
+
+func (s *DefaultTransactionService) ListForCustomer(customerId string) (*List, error) {
+	u := fmt.Sprintf("/transaction?customer=%s", customerId)
+	txns := &List{}
+	err := s.Client.Call("GET", u, nil, txns)
+	return txns, err
 }

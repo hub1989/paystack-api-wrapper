@@ -15,6 +15,7 @@ type Service interface {
 	ListN(count, offset int) (*List, error)
 	SetRiskAction(customerCode, riskAction string) (*Customer, error)
 	DeactivateAuthorization(authorizationCode string) (*response.Response, error)
+	ValidateCustomer(customerId string, request *ValidateCustomerRequest) (bool, error)
 }
 
 // DefaultCustomerService handles operations related to the customer
@@ -94,4 +95,19 @@ func (s *DefaultCustomerService) DeactivateAuthorization(authorizationCode strin
 	err := s.Client.Call("POST", "/customer/deactivate_authorization", params, resp)
 
 	return resp, err
+}
+
+func (s *DefaultCustomerService) ValidateCustomer(customerId string, request *ValidateCustomerRequest) (bool, error) {
+	endpoint := fmt.Sprintf("/customer/%s/identification", customerId)
+	resp := struct {
+		Status  string `json:"status,omitempty"`
+		Message string `json:"message,omitempty"`
+	}{}
+
+	err := s.Client.Call("POST", endpoint, request, &resp)
+	if err != nil {
+		return false, err
+	}
+
+	return true, nil
 }
