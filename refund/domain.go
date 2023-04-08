@@ -4,13 +4,13 @@ import "time"
 
 type Response struct {
 	Transaction struct {
-		Id            int64     `json:"id,omitempty"`
-		Domain        string    `json:"domain,omitempty"`
-		Reference     string    `json:"reference,omitempty"`
-		Amount        int       `json:"amount,omitempty"`
-		PaidAt        time.Time `json:"paid_at,omitempty"`
-		Channel       string    `json:"channel,omitempty"`
-		Currency      string    `json:"currency,omitempty"`
+		Id            int64  `json:"id,omitempty"`
+		Domain        string `json:"domain,omitempty"`
+		Reference     string `json:"reference,omitempty"`
+		Amount        int    `json:"amount,omitempty"`
+		PaidAt        string `json:"paid_at,omitempty"`
+		Channel       string `json:"channel,omitempty"`
+		Currency      string `json:"currency,omitempty"`
 		Authorization struct {
 			ExpMonth    interface{} `json:"exp_month,omitempty"`
 			ExpYear     interface{} `json:"exp_year,omitempty"`
@@ -39,12 +39,12 @@ type Response struct {
 	CustomerNote   string      `json:"customer_note,omitempty"`
 	Status         string      `json:"status,omitempty"`
 	RefundedBy     string      `json:"refunded_by,omitempty"`
-	ExpectedAt     time.Time   `json:"expected_at,omitempty"`
+	ExpectedAt     string      `json:"expected_at,omitempty"`
 	Currency       string      `json:"currency,omitempty"`
 	Domain         string      `json:"domain,omitempty"`
 	Amount         int         `json:"amount,omitempty"`
 	FullyDeducted  bool        `json:"fully_deducted,omitempty"`
 	Id             int         `json:"id,omitempty"`
-	CreatedAt      time.Time   `json:"createdAt,omitempty"`
-	UpdatedAt      time.Time   `json:"updatedAt,omitempty"`
+	CreatedAt      string      `json:"createdAt,omitempty"`
+	UpdatedAt      string      `json:"updatedAt,omitempty"`
 }
