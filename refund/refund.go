@@ -7,7 +7,7 @@ import (
 
 type Service interface {
 	RefundById(id int64) (*Response, error)
-	RefundByReference(reference *string) (*Response, error)
+	RefundByReference(reference string) (*Response, error)
 }
 
 type DefaultRefundService struct {
