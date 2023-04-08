@@ -1,7 +1,5 @@
 package refund
 
-import "time"
-
 type Response struct {
 	Transaction struct {
 		Id            int64  `json:"id,omitempty"`
@@ -27,7 +25,7 @@ type Response struct {
 		Split struct {
 		} `json:"split,omitempty"`
 		OrderId            interface{} `json:"order_id,omitempty"`
-		PaidAt1            time.Time   `json:"paidAt,omitempty"`
+		PaidAt1            string      `json:"paidAt,omitempty"`
 		PosTransactionData interface{} `json:"pos_transaction_data,omitempty"`
 		Source             interface{} `json:"source,omitempty"`
 		FeesBreakdown      interface{} `json:"fees_breakdown,omitempty"`
