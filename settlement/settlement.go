@@ -1,12 +1,14 @@
 package settlement
 
 import (
+	"context"
 	"github.com/hub1989/paystack-api-wrapper/client"
+	"net/http"
 )
 
 type Service interface {
-	List() (*List, error)
-	ListN(count, offset int) (*List, error)
+	List(ctx context.Context) (*List, error)
+	ListN(ctx context.Context, count, offset int) (*List, error)
 }
 
 // DefaultSettlementService handles operations related to the settlement
@@ -17,15 +19,15 @@ type DefaultSettlementService struct {
 
 // List returns a list of settlements.
 // For more details see https://developers.paystack.co/v1.0/reference#settlements
-func (s *DefaultSettlementService) List() (*List, error) {
-	return s.ListN(10, 0)
+func (s *DefaultSettlementService) List(ctx context.Context) (*List, error) {
+	return s.ListN(ctx, 10, 0)
 }
 
 // ListN returns a list of settlements
 // For more details see https://developers.paystack.co/v1.0/reference#settlements
-func (s *DefaultSettlementService) ListN(count, offset int) (*List, error) {
+func (s *DefaultSettlementService) ListN(ctx context.Context, count, offset int) (*List, error) {
 	u := client.PaginateURL("/settlement", count, offset)
 	pg := &List{}
-	err := s.Client.Call("GET", u, nil, pg)
+	err := s.Client.Call(ctx, http.MethodGet, u, nil, pg)
 	return pg, err
 }

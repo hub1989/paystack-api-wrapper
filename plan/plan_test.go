@@ -1,6 +1,7 @@
 package plan
 
 import (
+	"context"
 	"github.com/hub1989/paystack-api-wrapper/client"
 	"github.com/hub1989/paystack-api-wrapper/configuration"
 	"testing"
@@ -11,7 +12,7 @@ var service *DefaultPlanService
 
 func init() {
 	apiKey := client.MustGetTestKey()
-	c = configuration.NewClient(apiKey, nil)
+	c = configuration.NewClient(apiKey, nil, true)
 	service = &DefaultPlanService{Client: c}
 }
 
@@ -23,7 +24,7 @@ func TestPlanCRUD(t *testing.T) {
 	}
 
 	// create the plan
-	plan, err := service.Create(plan1)
+	plan, err := service.Create(context.TODO(), plan1)
 	if err != nil {
 		t.Errorf("CREATE Plan returned error: %v", err)
 	}
@@ -33,7 +34,7 @@ func TestPlanCRUD(t *testing.T) {
 	}
 
 	// retrieve the plan
-	plan, err = service.Get(plan.ID)
+	plan, err = service.Get(context.TODO(), plan.ID)
 	if err != nil {
 		t.Errorf("GET Plan returned error: %v", err)
 	}
@@ -43,7 +44,7 @@ func TestPlanCRUD(t *testing.T) {
 	}
 
 	// retrieve the plan list
-	plans, err := service.List()
+	plans, err := service.List(context.TODO())
 	if err != nil || !(len(plans.Values) > 0) || !(plans.Meta.Total > 0) {
 		t.Errorf("Expected Plan list, got %d, returned error %v", len(plans.Values), err)
 	}

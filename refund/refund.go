@@ -1,20 +1,22 @@
 package refund
 
 import (
+	"context"
 	"fmt"
 	"github.com/hub1989/paystack-api-wrapper/client"
+	"net/http"
 )
 
 type Service interface {
-	RefundById(id int64) (*Response, error)
-	RefundByReference(reference string) (*Response, error)
+	RefundById(ctx context.Context, id int64) (*Response, error)
+	RefundByReference(ctx context.Context, reference string) (*Response, error)
 }
 
 type DefaultRefundService struct {
 	*client.Client
 }
 
-func (d DefaultRefundService) RefundById(id int64) (*Response, error) {
+func (d DefaultRefundService) RefundById(ctx context.Context, id int64) (*Response, error) {
 	endpoint := fmt.Sprintf("/refund")
 	request := struct {
 		Transaction int64 `json:"transaction"`
@@ -23,11 +25,11 @@ func (d DefaultRefundService) RefundById(id int64) (*Response, error) {
 	}
 
 	response := &Response{}
-	err := d.Client.Call("POST", endpoint, &request, response)
+	err := d.Client.Call(ctx, http.MethodPost, endpoint, &request, response)
 	return response, err
 }
 
-func (d DefaultRefundService) RefundByReference(reference string) (*Response, error) {
+func (d DefaultRefundService) RefundByReference(ctx context.Context, reference string) (*Response, error) {
 	endpoint := fmt.Sprintf("/refund")
 	request := struct {
 		Transaction string `json:"transaction"`
@@ -36,6 +38,6 @@ func (d DefaultRefundService) RefundByReference(reference string) (*Response, er
 	}
 
 	response := &Response{}
-	err := d.Client.Call("POST", endpoint, &request, response)
+	err := d.Client.Call(ctx, http.MethodPost, endpoint, &request, response)
 	return response, err
 }

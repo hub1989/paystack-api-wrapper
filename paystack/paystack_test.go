@@ -1,6 +1,7 @@
 package paystack
 
 import (
+	"context"
 	"github.com/hub1989/paystack-api-wrapper/client"
 	"github.com/hub1989/paystack-api-wrapper/configuration"
 	"testing"
@@ -10,7 +11,7 @@ var C *client.Client
 
 func init() {
 	apiKey := client.MustGetTestKey()
-	C = configuration.NewClient(apiKey, nil)
+	C = configuration.NewClient(apiKey, nil, true)
 }
 
 //func TestResolveCardBIN(t *testing.T) {
@@ -24,7 +25,7 @@ func init() {
 //}
 
 func TestCheckBalance(t *testing.T) {
-	resp, err := C.CheckBalance()
+	resp, err := C.CheckBalance(context.TODO())
 	if err != nil {
 		t.Error(err)
 	}
@@ -38,7 +39,7 @@ func TestCheckBalance(t *testing.T) {
 }
 
 func TestSessionTimeout(t *testing.T) {
-	resp, err := C.GetSessionTimeout()
+	resp, err := C.GetSessionTimeout(context.TODO())
 	if err != nil {
 		t.Error(err)
 	}

@@ -1,6 +1,7 @@
 package page
 
 import (
+	"context"
 	"github.com/hub1989/paystack-api-wrapper/client"
 	"github.com/hub1989/paystack-api-wrapper/configuration"
 	"testing"
@@ -11,7 +12,7 @@ var service *DefaultPageService
 
 func init() {
 	apiKey := client.MustGetTestKey()
-	c = configuration.NewClient(apiKey, nil)
+	c = configuration.NewClient(apiKey, nil, true)
 	service = &DefaultPageService{Client: c}
 }
 
@@ -22,13 +23,13 @@ func TestPageCRUD(t *testing.T) {
 	}
 
 	// create the page
-	page, err := service.Create(page1)
+	page, err := service.Create(context.TODO(), page1)
 	if err != nil {
 		t.Errorf("CREATE Page returned error: %v", err)
 	}
 
 	// retrieve the page
-	page, err = service.Get(page.ID)
+	page, err = service.Get(context.TODO(), page.ID)
 	if err != nil {
 		t.Errorf("GET Page returned error: %v", err)
 	}
@@ -38,7 +39,7 @@ func TestPageCRUD(t *testing.T) {
 	}
 
 	// retrieve the page list
-	pages, err := service.List()
+	pages, err := service.List(context.TODO())
 	if err != nil || !(len(pages.Values) > 0) || !(pages.Meta.Total > 0) {
 		t.Errorf("Expected Page list, got %d, returned error %v", len(pages.Values), err)
 	}

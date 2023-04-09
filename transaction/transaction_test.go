@@ -1,6 +1,7 @@
 package transaction
 
 import (
+	"context"
 	"fmt"
 	"github.com/hub1989/paystack-api-wrapper/client"
 	"github.com/hub1989/paystack-api-wrapper/configuration"
@@ -13,7 +14,7 @@ var service DefaultTransactionService
 
 func init() {
 	apiKey := client.MustGetTestKey()
-	c = configuration.NewClient(apiKey, nil)
+	c = configuration.NewClient(apiKey, nil, true)
 	service = DefaultTransactionService{Client: c}
 }
 
@@ -27,7 +28,7 @@ func TestInitializeTransaction(t *testing.T) {
 		Amount:    6000,
 		Reference: "Txn-" + fmt.Sprintf("%d", makeTimestamp()),
 	}
-	resp, err := service.Initialize(txn)
+	resp, err := service.Initialize(context.TODO(), txn)
 	if err != nil {
 		t.Error(err)
 	}
@@ -44,7 +45,7 @@ func TestInitializeTransaction(t *testing.T) {
 		t.Error("Missing transaction reference")
 	}
 
-	txn1, err := service.Verify(resp["reference"].(string))
+	txn1, err := service.Verify(context.TODO(), resp["reference"].(string))
 
 	if err != nil {
 		t.Error(err)
@@ -58,7 +59,7 @@ func TestInitializeTransaction(t *testing.T) {
 		t.Errorf("Missing transaction reference")
 	}
 
-	_, err = service.Get(txn1.ID)
+	_, err = service.Get(context.TODO(), txn1.ID)
 
 	if err != nil {
 		t.Error(err)
@@ -67,21 +68,21 @@ func TestInitializeTransaction(t *testing.T) {
 
 func TestTransactionList(t *testing.T) {
 	// retrieve the transaction list
-	transactions, err := service.List()
+	transactions, err := service.List(context.TODO())
 	if err != nil {
 		t.Errorf("Expected Transaction list, got %d, returned error %v", len(transactions.Values), err)
 	}
 }
 
 func TestTransactionTotals(t *testing.T) {
-	_, err := service.Totals()
+	_, err := service.Totals(context.TODO())
 	if err != nil {
 		t.Error(err)
 	}
 }
 
 func TestExportTransaction(t *testing.T) {
-	resp, err := service.Export(nil)
+	resp, err := service.Export(context.TODO(), nil)
 	if err != nil {
 		t.Error(err)
 	}

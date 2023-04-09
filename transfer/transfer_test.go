@@ -1,6 +1,7 @@
 package transfer
 
 import (
+	"context"
 	"github.com/hub1989/paystack-api-wrapper/client"
 	"github.com/hub1989/paystack-api-wrapper/configuration"
 	"testing"
@@ -11,7 +12,7 @@ var service *DefaultTransferService
 
 func init() {
 	apiKey := client.MustGetTestKey()
-	c = configuration.NewClient(apiKey, nil)
+	c = configuration.NewClient(apiKey, nil, true)
 	service = &DefaultTransferService{Client: c}
 }
 
@@ -98,7 +99,7 @@ func TestBulkTransfer(t *testing.T) {
 
 func TestTransferList(t *testing.T) {
 	// retrieve the transfer list
-	transfers, err := service.List()
+	transfers, err := service.List(context.TODO())
 	if err != nil {
 		t.Errorf("Expected Transfer list, got %d, returned error %v", len(transfers.Values), err)
 	}
@@ -152,9 +153,9 @@ func createDemoRecipients() ([]*Recipient, error) {
 		Metadata:      map[string]interface{}{"job": "Plumber"},
 	}
 
-	_, err := service.CreateRecipient(recipient1)
-	_, err = service.CreateRecipient(recipient2)
-	_, err = service.CreateRecipient(recipient3)
+	_, err := service.CreateRecipient(context.TODO(), recipient1)
+	_, err = service.CreateRecipient(context.TODO(), recipient2)
+	_, err = service.CreateRecipient(context.TODO(), recipient3)
 
 	return []*Recipient{recipient1, recipient2, recipient3}, err
 }

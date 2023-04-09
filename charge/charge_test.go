@@ -1,6 +1,7 @@
 package charge
 
 import (
+	"context"
 	"github.com/hub1989/paystack-api-wrapper/client"
 	"github.com/hub1989/paystack-api-wrapper/configuration"
 	"testing"
@@ -11,7 +12,7 @@ var service *DefaultChargeService
 
 func init() {
 	apiKey := client.MustGetTestKey()
-	c = configuration.NewClient(apiKey, nil)
+	c = configuration.NewClient(apiKey, nil, true)
 	service = &DefaultChargeService{Client: c}
 }
 
@@ -28,7 +29,7 @@ func TestChargeServiceCreate(t *testing.T) {
 		Birthday: "1999-12-31",
 	}
 
-	resp, err := service.Create(&charge)
+	resp, err := service.Create(context.TODO(), &charge)
 	if err != nil {
 		t.Errorf("Create Charge returned error: %v", err)
 	}
@@ -51,7 +52,7 @@ func TestChargeServiceCheckPending(t *testing.T) {
 		Birthday: "1999-12-31",
 	}
 
-	resp, err := service.Create(&charge)
+	resp, err := service.Create(context.TODO(), &charge)
 	if err != nil {
 		t.Errorf("Create charge returned error: %v", err)
 	}
@@ -60,7 +61,7 @@ func TestChargeServiceCheckPending(t *testing.T) {
 		t.Error("Missing charge reference")
 	}
 
-	resp2, err := service.CheckPending(resp["reference"].(string))
+	resp2, err := service.CheckPending(context.TODO(), resp["reference"].(string))
 	if err != nil {
 		t.Errorf("Check pending charge returned error: %v", err)
 	}

@@ -1,6 +1,7 @@
 package customer
 
 import (
+	"context"
 	"github.com/hub1989/paystack-api-wrapper/client"
 	"github.com/hub1989/paystack-api-wrapper/configuration"
 	"testing"
@@ -10,7 +11,7 @@ var service *DefaultCustomerService
 
 func init() {
 	apiKey := client.MustGetTestKey()
-	c := configuration.NewClient(apiKey, nil)
+	c := configuration.NewClient(apiKey, nil, true)
 	service = &DefaultCustomerService{Client: c}
 }
 
@@ -22,13 +23,13 @@ func TestCustomerCRUD(t *testing.T) {
 		Phone:     "+23400000000000000",
 	}
 	// create the customer
-	customer, err := service.Create(cust)
+	customer, err := service.Create(context.TODO(), cust)
 	if err != nil {
 		t.Errorf("CREATE Customer returned error: %v", err)
 	}
 
 	// retrieve the customer
-	customer, err = service.Get(customer.CustomerCode)
+	customer, err = service.Get(context.TODO(), customer.CustomerCode)
 	if err != nil {
 		t.Errorf("GET Customer returned error: %v", err)
 	}
@@ -50,7 +51,7 @@ func TestCustomerCRUD(t *testing.T) {
 	}
 
 	// retrieve the customer list
-	customers, err := service.List()
+	customers, err := service.List(context.TODO())
 	if err != nil || !(len(customers.Values) > 0) || !(customers.Meta.Total > 0) {
 		t.Errorf("Expected Customer list, got %d, returned error %v", len(customers.Values), err)
 	}
@@ -64,10 +65,10 @@ func TestCustomerRiskAction(t *testing.T) {
 		Email:     "user1-deny@gmail.com",
 		Phone:     "+2341000000000000",
 	}
-	customer1, _ := service.Create(cust)
+	customer1, _ := service.Create(context.TODO(), cust)
 
 	//TODO: investigate why 'allow' returns: 403 You cannot whitelist customers on this integration
-	customer, err := service.SetRiskAction(customer1.CustomerCode, "deny")
+	customer, err := service.SetRiskAction(context.TODO(), customer1.CustomerCode, "deny")
 	if err != nil {
 		t.Errorf("Customer risk action returned error %v", err)
 	}
@@ -78,7 +79,7 @@ func TestCustomerRiskAction(t *testing.T) {
 }
 
 func TestListCustomer(t *testing.T) {
-	customers, err := service.List()
+	customers, err := service.List(context.TODO())
 	if err != nil {
 		t.Errorf(err.Error())
 	}
