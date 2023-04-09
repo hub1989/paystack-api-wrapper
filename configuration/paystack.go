@@ -2,6 +2,7 @@ package configuration
 
 import (
 	"github.com/hub1989/paystack-api-wrapper/client"
+	log "github.com/sirupsen/logrus"
 	"net/http"
 	"net/url"
 )
@@ -21,6 +22,10 @@ func NewClient(key string, httpClient *http.Client, loggingEnabled bool) *client
 		Key:            key,
 		BaseURL:        u,
 		LoggingEnabled: loggingEnabled,
+	}
+
+	if loggingEnabled {
+		log.Info("logging is enabled..all requests and errors to paystack will be logged")
 	}
 	return c
 }
